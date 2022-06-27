@@ -22,18 +22,18 @@ router.get('/', async ( req, res, next ) => {
 //   }
 // })
 
-//PATCH '/api/actions/edit' => Añadimos fecha en el date
-router.get('/edit', async (req, res, next) => {
-  const { fecha } = req.body
-  try {
-    const addFecha = await Actions.create({
-      fecha,
-    })
-    res.json(addFecha)
-  } catch (error) {
-    res.json(error)
-  }
-})
+// //PATCH '/api/actions/edit' => Añadimos fecha en el date
+// router.get('/edit', async (req, res, next) => {
+//   const { fecha } = req.body
+//   try {
+//     const addFecha = await Actions.create({
+//       fecha,
+//     })
+//     res.json(addFecha)
+//   } catch (error) {
+//     res.json(error)
+//   }
+// })
 
 
 

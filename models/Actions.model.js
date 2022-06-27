@@ -2,15 +2,14 @@ const { Schema, model } = require ('mongoose')
 
 const actionsSchema = new Schema(
   {
-    name: [{
+    name: {
       type: String,
-      enum: ["Tratamiento", "Recolección", "Alimento", "Agua", "Revisión General"],
       required: true
-    }],
-    user:{
+    },
+    user:[{
       type: Schema.Types.ObjectId,
       ref: "User"
-    },
+    }],
     fecha: Date 
   },
   {

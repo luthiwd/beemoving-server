@@ -5,6 +5,7 @@ const Hive = require("../models/Hive.model")
 const Actions = require("../models/Actions.model")
 const User = require ("../models/User.model")
 
+
 //CREAMOS EL CRUD PARA LA CREACIÓN DE COLMENAS
 
 //GET '/api/colmenas/' => Renderizamos todas las colmenas
@@ -51,12 +52,18 @@ router.get('/:id', async (req, res, next) => {
 })
 
 //PATCH 'api/colmena/:id' => Editamos la colmena para añadir nuevos parametros
-router.patch('/:id/edit',uploader.single("image"),uploader.array("imagesfiles"), async (req, res, next) => {
+router.patch('/:id',isAuthenticated, uploader.single("image"),uploader.array("imagesfiles"), async (req, res, next) => {
   const { id } = req.params
-  const { name, actions, image } = req.body
+  const { name, actions, image, imagefiles } = req.body
+  const { user } = req.payload
   try {
+    const insertAction = {
+      name,
+      user: user
+    }
+    const newActions = await Actions.create(insertAction)
     const updateHive = await Hive.finByIdAndUpdate(id,{$push:{
-      actions,
+      actions: newActions._id
     },
     name,
     image,
