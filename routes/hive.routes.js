@@ -20,11 +20,10 @@ router.get('/', async (req, res ,next) => {
 
 //POST '/api/colmenas' => Añadimos una nueva colmena
 router.post('/',uploader.single("image"), async (req, res, next) => {
-  const { name, actions, image } = req.body
+  const { name, image } = req.body
   try {
     const newHive = await Hive.create({
       name,
-      actions,
       image
     })
     res.json(newHive)
@@ -51,25 +50,50 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-//PATCH 'api/colmena/:id' => Editamos la colmena para añadir nuevos parametros
-router.patch('/:id',isAuthenticated, uploader.single("image"),uploader.array("imagesfiles"), async (req, res, next) => {
-  const { id } = req.params
-  const { name, actions, image, imagefiles } = req.body
-  const { user } = req.payload
+// //PATCH '/api/colmena/:id' => Añadimos nueva acción y varias imagenes
+// router.patch('/:id/:updateHive/actions',isAuthenticated, uploader.array("imagesfiles"), async (req, res, next) => {
+//   const { id, updateHive } = req.params
+//   console.log(updateHive)
+//   const { actions, imagesfiles } = req.body
+    
+//   try {
+//     const allActions = await Actions.find()
+//     await Hive.findByIdAndUpdate(id, {
+//       $push: {"actions": actions},
+//       $push: {"imagesfiles": imagesfiles},      
+//     }, {new:true, upsert:true})
+//     res.status(200).json(allActions)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
+// PATCH ‘/api/cajas/:id/edit’ -> Editamos Caja
+router.patch("/:id/:updateHive",isAuthenticated, async (req, res, next) => {
+  const { id, updateHive } = req.params;
+    console.log(updateHive)
+  
   try {
-    const insertAction = {
-      name,
-      user: user
-    }
-    const newActions = await Actions.create(insertAction)
-    const updateHive = await Hive.finByIdAndUpdate(id,{$push:{
-      actions: newActions._id
-    },
+    await Hive.findByIdAndUpdate(id, {
+      $push: {"actions": updateHive},
+            // $push: {"imagesfiles": imagesfiles},
+    });
+    res.status(200)
+  } catch (error) {
+    next(error);
+  }
+});
+
+//PATCH 'api/colmena/:id' => Editamos la colmena para añadir nuevos parametros
+router.patch('/:id',isAuthenticated, uploader.single("image"), async (req, res, next) => {
+  const { id } = req.params
+  const { name, image } = req.body
+  try {
+    const updateHive = await Hive.findByIdAndUpdate(id,{
     name,
     image,
-    imagesfiles
-    },{new:true}).exec();
-    res.json(updateHive)
+    },{new:true});
+    res.status(200).json(updateHive)
   } catch (error) {
     next(error)
   }
