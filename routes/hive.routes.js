@@ -19,7 +19,7 @@ router.get('/', async (req, res ,next) => {
 })
 
 //POST '/api/colmenas' => Añadimos una nueva colmena
-router.post('/',uploader.single("image"), async (req, res, next) => {
+router.post('/new',uploader.single("image"), async (req, res, next) => {
   const { name, image } = req.body
   try {
     const newHive = await Hive.create({
@@ -50,34 +50,22 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-// //PATCH '/api/colmena/:id' => Añadimos nueva acción y varias imagenes
-// router.patch('/:id/:updateHive/actions',isAuthenticated, uploader.array("imagesfiles"), async (req, res, next) => {
-//   const { id, updateHive } = req.params
-//   console.log(updateHive)
-//   const { actions, imagesfiles } = req.body
-    
-//   try {
-//     const allActions = await Actions.find()
-//     await Hive.findByIdAndUpdate(id, {
-//       $push: {"actions": actions},
-//       $push: {"imagesfiles": imagesfiles},      
-//     }, {new:true, upsert:true})
-//     res.status(200).json(allActions)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
 
-// PATCH ‘/api/cajas/:id/edit’ -> Editamos Caja
-router.patch("/:id/:updateHive",isAuthenticated, async (req, res, next) => {
+// PATCH ‘/api/cajas/:id/edit’ -> Editamos Colmena para añadir actions e imagenes uploader.array("imagesfiles")
+router.patch("/:id/:updateHive",isAuthenticated,  async (req, res, next) => {
   const { id, updateHive } = req.params;
-    console.log(updateHive)
-  
+  //const { imagesfiles } = req.body
+  const { _id } = req.payload
+  console.log(_id)
   try {
     await Hive.findByIdAndUpdate(id, {
       $push: {"actions": updateHive},
-            // $push: {"imagesfiles": imagesfiles},
-    });
+      //$push: {"imagesfiles": imagesfiles},
+    },{new:true});
+    await Actions.findByIdAndUpdate(updateHive,{
+      $push: {"user": _id}
+      
+    })
     res.status(200)
   } catch (error) {
     next(error);

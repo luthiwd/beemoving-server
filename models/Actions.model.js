@@ -10,7 +10,9 @@ const actionsSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User"
     }],
-    fecha: Date 
+    fecha: [{
+      type: Date
+    }]
   },
   {
     timestamps: true,

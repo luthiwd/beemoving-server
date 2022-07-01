@@ -2,33 +2,27 @@ const actions = [
 
   {
     "name": "Tratamiento",
-    "fecha":"",
-    "user":[]
+
   },
   {
     "name": "Recolección",
-    "fecha":"",
-    
+
   },
   {
     "name": "Alimento",
-    "fecha":"",
-    
+
   },
   {
     "name": "Agua",
-    "fecha":"",
-    
+
   },
   {
     "name": "Revisión General",
-    "fecha":"",
-    
+
   },
   {
     "name": "Reina",
-    "fecha":"",
-    
+
   },
 ];
 
