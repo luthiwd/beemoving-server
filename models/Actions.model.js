@@ -6,13 +6,14 @@ const actionsSchema = new Schema(
       type: String,
       required: true
     },
-    user:[{
+    user:{
       type: Schema.Types.ObjectId,
       ref: "User"
-    }],
-    fecha: [{
-      type: Date
-    }]
+    },
+    comment: {
+      type: Schema.Types.ObjectId,
+      ref: "Comment"
+    }
   },
   {
     timestamps: true,

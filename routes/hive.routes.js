@@ -50,22 +50,36 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-
-// PATCH ‘/api/cajas/:id/edit’ -> Editamos Colmena para añadir actions e imagenes uploader.array("imagesfiles")
-router.patch("/:id/:updateHive",isAuthenticated,  async (req, res, next) => {
-  const { id, updateHive } = req.params;
-  //const { imagesfiles } = req.body
-  const { _id } = req.payload
-  console.log(_id)
+//PATCH '/api/colmenas/:idHive/:idAction/deleteAction => Borramos una acción de la Hive
+router.patch('/:idHive/:idAction/deleteAction', isAuthenticated, async (req, res, next) => {
+  const { idHive, idAction } = req.params;
   try {
+    await Hive.findByIdAndUpdate(idHive, {
+      $pull: { actions: idAction }
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+
+// PATCH ‘/api/cajas/:id/edit’ -> Editamos Colmena para añadir nueva actions e imagenes uploader.array("imagesfiles") 
+router.patch("/:id/action",isAuthenticated,  async (req, res, next) => {
+  const { id } = req.params;
+  const { name } = req.body
+  const { _id } = req.payload
+  
+  try {
+    
+    const newAction = await Actions.create({
+      name: name,
+      user: _id
+    })
     await Hive.findByIdAndUpdate(id, {
-      $push: {"actions": updateHive},
+      $push: {"actions": newAction},
       //$push: {"imagesfiles": imagesfiles},
     },{new:true});
-    await Actions.findByIdAndUpdate(updateHive,{
-      $push: {"user": _id}
-      
-    })
+    
     res.status(200)
   } catch (error) {
     next(error);
