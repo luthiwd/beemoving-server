@@ -13,9 +13,6 @@ router.use('/auth', authRoutes)
 const hiveRoutes = require ('./hive.routes')
 router.use('/colmenas', hiveRoutes)
 
-const actionsRoutes = require ('./actions.routes')
-router.use('/acciones', actionsRoutes)
-
 const uploaderRoutes = require("./uploader.routes.js")
 router.use("/uploader", uploaderRoutes)
 
