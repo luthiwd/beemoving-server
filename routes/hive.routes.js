@@ -43,7 +43,7 @@ router.get('/:id', async (req, res, next) => {
         path: 'user',
         model: User,
         select: "username"
-      }}).exec();
+      }});
     res.json(foundHive)
   } catch (error) {
     next(error)
