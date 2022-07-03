@@ -11,8 +11,7 @@ const actionsSchema = new Schema(
       ref: "User"
     },
     comment: {
-      type: Schema.Types.ObjectId,
-      ref: "Comment"
+      type: String,
     }
   },
   {
