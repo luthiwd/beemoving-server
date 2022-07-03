@@ -77,11 +77,11 @@ router.patch("/:id/action",isAuthenticated,  async (req, res, next) => {
       user: _id,
       comment
     })
-    await Hive.findByIdAndUpdate(id, {
+    const updateHive = await Hive.findByIdAndUpdate(id, {
       $push: {"actions": newAction},
       //$push: {"imagesfiles": imagesfiles},
     },{new:true});
-    res.status(200).json("Añadida nueva Acción")
+    res.status(200).json(updateHive)
   } catch (error) {
     next(error);
   }
