@@ -4,7 +4,7 @@ const hiveSchema = new Schema(
   {
     image:{
       type: String,
-      default: "https://res.cloudinary.com/djersm2h6/image/upload/v1656082259/beemoving/beemoving_avfp3t.png"
+      default: "https://res.cloudinary.com/djersm2h6/image/upload/v1656867138/beemoving/imagenes/beemoving_zi2i1x.png"
     },
     imagesfiles:[{
       type: String,

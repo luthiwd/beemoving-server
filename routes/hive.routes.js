@@ -65,22 +65,22 @@ router.patch('/:idHive/:idAction/deleteAction', isAuthenticated, async (req, res
 
 
 // PATCH ‘/api/cajas/:id/edit’ -> Editamos Colmena para añadir nueva actions e imagenes uploader.array("imagesfiles") 
-router.patch("/:id/action",isAuthenticated,  async (req, res, next) => {
+router.patch("/:id/action",isAuthenticated, uploader.single("image"), async (req, res, next) => {
   const { id } = req.params;
-  const { name, comment } = req.body
+  const { name, comment, image } = req.body
   const { _id } = req.payload
-  
   try {
     
     const newAction = await Actions.create({
-      name: name,
+      name,
       user: _id,
       comment
     })
+    console.log(newAction)
     const updateHive = await Hive.findByIdAndUpdate(id, {
-      $push: {"actions": newAction},
-      //$push: {"imagesfiles": imagesfiles},
-    },{new:true});
+      $push: {"actions": newAction._id,
+    "imagesfiles": image}
+    });
     res.status(200).json(updateHive)
   } catch (error) {
     next(error);

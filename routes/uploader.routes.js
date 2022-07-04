@@ -7,8 +7,8 @@ router.post("/", uploader.single("image"), (req, res, next) => {
     res.json(req.file.path)
 })
 
-router.post("/", uploader.array("imagesfiles"), (req, res, next) => {
-    res.json(req.files.path)
-})
+// router.post("/", uploader.array("images"), (req, res, next) => {
+//     res.json(req.files.path)
+// })
 
 module.exports = router;
