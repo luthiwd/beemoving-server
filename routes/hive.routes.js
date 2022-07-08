@@ -87,7 +87,7 @@ router.patch("/:id/action",isAuthenticated, uploader.single("image"), async (req
   }
 });
 
-//PATCH 'api/colmena/:id' => Editamos la colmena para añadir nuevos parametros
+//PATCH 'api/colmenas/:id' => Editamos la colmena para añadir nuevos parametros
 router.patch('/:id',isAuthenticated, uploader.single("image"), async (req, res, next) => {
   const { id } = req.params
   const { name, image } = req.body
@@ -102,7 +102,7 @@ router.patch('/:id',isAuthenticated, uploader.single("image"), async (req, res, 
   }
 })
 
-//DELETE '/api/colmena/:id' => Borrado de la colmena
+//DELETE '/api/colmenas/:id' => Borrado de la colmena
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
   try {

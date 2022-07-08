@@ -1,8 +1,8 @@
 const router = require("express").Router();
 
-router.get("/", (req, res, next) => {
-  res.json("All good in here");
-});
+// router.get("/", (req, res, next) => {
+//   res.json("All good in here");
+// });
 
 // You put the next routes here 👇
 // example: router.use("/auth", authRoutes)
@@ -13,7 +13,12 @@ router.use('/auth', authRoutes)
 const hiveRoutes = require ('./hive.routes')
 router.use('/colmenas', hiveRoutes)
 
+const actionsRoutes = require ('./actions.routes')
+router.use('/actions', actionsRoutes)
+
 const uploaderRoutes = require("./uploader.routes.js")
 router.use("/uploader", uploaderRoutes)
+
+
 
 module.exports = router;
