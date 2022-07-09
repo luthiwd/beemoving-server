@@ -6,7 +6,6 @@ const Actions = require ("../models/Actions.model");
 //GET '/api/actions/:id' => Detalles de la Action
 router.get('/:id' , isAuthenticated, async (req, res, next) => {
   const { id } = req.params
-  console.log(id)
   try {
     const actionDetails = await Actions.findById(id)
     res.json(actionDetails)
