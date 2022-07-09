@@ -76,7 +76,6 @@ router.patch("/:id/action",isAuthenticated, uploader.single("image"), async (req
       user: _id,
       comment
     })
-    console.log(newAction)
     const updateHive = await Hive.findByIdAndUpdate(id, {
       $push: {"actions": newAction._id,
     "imagesfiles": image}
